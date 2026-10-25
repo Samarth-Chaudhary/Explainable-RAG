@@ -1,0 +1,865 @@
+{
+  "evaluation_metadata": {
+    "execution_timestamp": "2026-10-25T09:51:03.528732Z",
+    "script_path": "scripts/train_and_evaluate_models.py",
+    "model_version": "2.0.0-real",
+    "feature_schema_hash": "dcc3a4e6f8845bef6bffab8d5df423992197ea5e2ffaf7a6036176de439d55b8",
+    "index_version": "97a8041aa6e72d55abe32b8f92efd5f130c4efb6a256071818de0c01047f6974",
+    "corpus_chunks_count": 6,
+    "data_mode": "real_data_uci_350",
+    "training_dataset_id": "uci-default-credit-card-train-21k",
+    "calibration_status": "isotonic",
+    "decision_threshold_cost_optimal": 0.13,
+    "decision_threshold_demo_standard": 0.35
+  },
+  "counterfactual_metrics": {
+    "sample_size_applicants": 200,
+    "total_candidates_evaluated": 600,
+    "valid_candidates_count": 102,
+    "actionable_candidates_count": 102,
+    "validity_rate": 0.1767,
+    "actionability_rate": 0.1767,
+    "feasible_applicant_rate": 0.205,
+    "proximity": 0.0745,
+    "sparsity_mean_features_changed": 1.4797,
+    "mean_generation_latency_ms": 2153.0511,
+    "dice_failure_rate": 0.38,
+    "fallback_rate": 0.385,
+    "validity_rate_definition": "candidates whose exact re-scored model probability satisfies target / candidates evaluated",
+    "actionability_rate_definition": "candidates that satisfy target AND pass immutable, domain, derivation, range, and feasibility constraints / candidates evaluated"
+  },
+  "retrieval_metrics": {
+    "k": 3,
+    "sample_size_test_cases": 3,
+    "averaging_method": "macro_average",
+    "benchmark_claim_control": "Aspirational target (approx 52% naive baseline, 91%+ target Recall@3) are research hypotheses, not established legal or model facts. Below are the actual computed values measured on this dataset.",
+    "ontology_bridged_method": {
+      "name": "OntologyTranslatorService (Hybrid FAISS + BM25 + RRF)",
+      "Recall@3": 0.8333,
+      "Precision@3": 0.4444,
+      "MRR": 0.8333,
+      "nDCG@3": 0.7689
+    },
+    "naive_baseline_method": {
+      "name": "Naive Feature-String Baseline",
+      "Recall@3": 0.5,
+      "Precision@3": 0.2222,
+      "MRR": 0.2222,
+      "nDCG@3": 0.2689
+    },
+    "case_details": [
+      {
+        "case_id": "EVAL-001",
+        "feature": "FOIR_RATIO",
+        "expected_clauses": [
+          "SYN-POL-FOIR-001-P1-C1",
+          "SYN-POL-FOIR-001-P2-C2"
+        ],
+        "ontology_retrieved": [
+          "SYN-POL-FOIR-001-SPAN-P1_P2-C3",
+          "SYN-POL-FOIR-001-P1-C1",
+          "SYN-POL-FOIR-001-P2-C2"
+        ],
+        "ontology_recall_at_k": 1.0,
+        "naive_retrieved": [
+          "SYN-POL-FOIR-001-SPAN-P1_P2-C3",
+          "SYN-POL-LTV-001-SPAN-P1_P2-C3",
+          "SYN-POL-LTV-001-P2-C2"
+        ],
+        "naive_recall_at_k": 0.0
+      },
+      {
+        "case_id": "EVAL-002",
+        "feature": "LTV_RATIO",
+        "expected_clauses": [
+          "SYN-POL-LTV-001-P1-C1",
+          "SYN-POL-LTV-001-P2-C2"
+        ],
+        "ontology_retrieved": [
+          "SYN-POL-LTV-001-P1-C1",
+          "SYN-POL-LTV-001-SPAN-P1_P2-C3",
+          "SYN-POL-FOIR-001-P2-C2"
+        ],
+        "ontology_recall_at_k": 0.5,
+        "naive_retrieved": [
+          "SYN-POL-LTV-001-SPAN-P1_P2-C3",
+          "SYN-POL-FOIR-001-P2-C2",
+          "SYN-POL-LTV-001-P2-C2"
+        ],
+        "naive_recall_at_k": 0.5
+      },
+      {
+        "case_id": "EVAL-003",
+        "feature": "TENOR_MONTHS",
+        "expected_clauses": [
+          "SYN-POL-FOIR-001-P2-C2"
+        ],
+        "ontology_retrieved": [
+          "SYN-POL-FOIR-001-P2-C2",
+          "SYN-POL-FOIR-001-SPAN-P1_P2-C3",
+          "SYN-POL-LTV-001-P2-C2"
+        ],
+        "ontology_recall_at_k": 1.0,
+        "naive_retrieved": [
+          "SYN-POL-LTV-001-SPAN-P1_P2-C3",
+          "SYN-POL-LTV-001-P2-C2",
+          "SYN-POL-FOIR-001-P2-C2"
+        ],
+        "naive_recall_at_k": 1.0
+      }
+    ]
+  },
+  "citation_faithfulness": {
+    "real_reports_audit": {
+      "real_reports_evaluated": 50,
+      "real_citations_checked": 150,
+      "real_citations_passed": 150,
+      "real_citations_failed": 0,
+      "real_faithfulness_pass_rate": 1.0,
+      "normalization_policy": "Unicode NFKC normalization + ASCII/Unicode quote/dash unification + whitespace collapsing (\\s+ -> ' ') + trimming. Exact substring matching only. Verification establishes textual provenance only; it does not establish legal applicability, currency, or statutory validity.",
+      "evaluation_dataset": "data/processed/test.csv (first 50 applicants)"
+    },
+    "adversarial_verification_suite": {
+      "adversarial_variants_tested": 20,
+      "adversarial_attacks_caught": 20,
+      "adversarial_attacks_missed": 0,
+      "adversarial_catch_rate": 1.0,
+      "attack_types_tested": [
+        "completely_fabricated_quotes",
+        "subtly_tampered_real_quotes",
+        "mismatched_page_metadata",
+        "mismatched_source_id_metadata"
+      ]
+    }
+  },
+  "explanation_fidelity": {
+    "output_space": "log_odds",
+    "base_value": -5.717,
+    "shap_additivity_residual": 2.1e-07,
+    "additivity_residual_within_tolerance": true,
+    "features_attributed_count": 9,
+    "reconstruction_check": "f(x) == base_value + sum(shap_values) within 1e-4",
+    "sanity_check_status": "exact_by_construction_verified",
+    "scientific_caveat": "TreeSHAP is exact by construction. Additivity is an algorithmic sanity test, not a validation of real-world explanation fidelity."
+  },
+  "phase2_model_validity": {
+    "metadata": {
+      "execution_timestamp": "2026-10-25T09:51:03.532640+00:00",
+      "random_seed": 42,
+      "train_sample_size": 21000,
+      "val_sample_size": 4500,
+      "test_sample_size": 4500,
+      "feature_names": [
+        "FOIR_RATIO",
+        "LTV_RATIO",
+        "CREDIT_BUREAU_SCORE",
+        "PAST_DELINQUENCIES",
+        "DAYS_EMPLOYED",
+        "AGE",
+        "AMT_CREDIT",
+        "AMT_ANNUITY",
+        "AMT_INCOME_TOTAL"
+      ],
+      "best_hyperparameters_lr": {
+        "lr__C": 10.0
+      },
+      "best_hyperparameters_xgb": {
+        "colsample_bytree": 0.8,
+        "learning_rate": 0.05,
+        "max_depth": 4,
+        "n_estimators": 100,
+        "subsample": 0.8
+      },
+      "calibration_method": "isotonic",
+      "model_sha256": "a4403a4041294ffdbd11db45fce2ad22a151d1c5b968dc433e762bcf43c76673"
+    },
+    "threshold_selection": {
+      "cost_fn": 5.0,
+      "cost_fp": 1.0,
+      "optimal_threshold": 0.13,
+      "min_expected_cost": 0.5544444444444444,
+      "validation_stats": {
+        "threshold": 0.13,
+        "expected_cost_per_applicant": 0.5544444444444444,
+        "true_positives": 822,
+        "false_positives": 1630,
+        "true_negatives": 1875,
+        "false_negatives": 173,
+        "precision": 0.3352365415986949,
+        "recall": 0.8261306532663316,
+        "approval_rate": 0.45511111111111113
+      }
+    },
+    "test_metrics": {
+      "logistic_regression_baseline": {
+        "roc_auc": {
+          "value": 0.7450909517063689,
+          "ci_95": [
+            0.72640494937052,
+            0.764956384974261
+          ]
+        },
+        "pr_auc": {
+          "value": 0.5055785662428729,
+          "ci_95": [
+            0.4748376536623001,
+            0.5408514348635195
+          ]
+        },
+        "ks_statistic": {
+          "value": 0.3961702976288716,
+          "ci_95": [
+            0.36674269532487513,
+            0.43269111317058156
+          ]
+        },
+        "gini_coefficient": {
+          "value": 0.4901819034127377,
+          "ci_95": [
+            0.45280989874104005,
+            0.5299127699485219
+          ]
+        },
+        "brier_score": {
+          "value": 0.14207283075267438,
+          "ci_95": [
+            0.1352548936720687,
+            0.14940379328624204
+          ]
+        },
+        "expected_calibration_error": 0.014830138501868855
+      },
+      "xgboost_uncalibrated": {
+        "roc_auc": {
+          "value": 0.7759204626726082,
+          "ci_95": [
+            0.7589451335806526,
+            0.7924959074500459
+          ]
+        },
+        "pr_auc": {
+          "value": 0.5507104393112436,
+          "ci_95": [
+            0.5213298485880865,
+            0.582646062512189
+          ]
+        },
+        "ks_statistic": {
+          "value": 0.41428040930846677,
+          "ci_95": [
+            0.3851972819063746,
+            0.4548422641312872
+          ]
+        },
+        "gini_coefficient": {
+          "value": 0.5518409253452163,
+          "ci_95": [
+            0.5178902671613053,
+            0.5849918149000919
+          ]
+        },
+        "brier_score": {
+          "value": 0.1364726573228836,
+          "ci_95": [
+            0.12998668104410172,
+            0.14360968954861164
+          ]
+        },
+        "expected_calibration_error": 0.008862731059392292
+      },
+      "xgboost_calibrated": {
+        "roc_auc": {
+          "value": 0.7741819160202453,
+          "ci_95": [
+            0.7568766345997069,
+            0.7906166337729555
+          ]
+        },
+        "pr_auc": {
+          "value": 0.5305047408127821,
+          "ci_95": [
+            0.5015661339965567,
+            0.5614023091331253
+          ]
+        },
+        "ks_statistic": {
+          "value": 0.4060763602354624,
+          "ci_95": [
+            0.37610898056631065,
+            0.44163615901731273
+          ]
+        },
+        "gini_coefficient": {
+          "value": 0.5483638320404907,
+          "ci_95": [
+            0.5137532691994138,
+            0.5812332675459111
+          ]
+        },
+        "brier_score": {
+          "value": 0.13646148180093168,
+          "ci_95": [
+            0.1300820478382216,
+            0.14341256238959135
+          ]
+        },
+        "expected_calibration_error": 0.008168615695089101
+      },
+      "xgboost_beats_baseline": true,
+      "roc_auc_diff": 0.029090964313876477,
+      "calibration_curve_test": {
+        "uncalibrated": {
+          "prob_pred": [
+            0.06995989540857109,
+            0.14677735275552298,
+            0.24760731999798236,
+            0.3381732955520406,
+            0.4472004394978285,
+            0.560314882885326,
+            0.649582575068219,
+            0.7479217249876374,
+            0.818334923549132
+          ],
+          "prob_true": [
+            0.06543494996150885,
+            0.15196662693682955,
+            0.24455611390284757,
+            0.3772893772893773,
+            0.4625,
+            0.49242424242424243,
+            0.6450381679389313,
+            0.7452229299363057,
+            0.8636363636363636
+          ]
+        },
+        "calibrated": {
+          "prob_pred": [
+            0.05396109407304012,
+            0.14218377740918725,
+            0.223021624609828,
+            0.32971900806296617,
+            0.4232814229099003,
+            0.5719686257191741,
+            0.654880864727766,
+            0.7578616467389193,
+            0.8669346736537086,
+            0.943427562713623
+          ],
+          "prob_true": [
+            0.060711188204683436,
+            0.14057971014492754,
+            0.20799180327868852,
+            0.328125,
+            0.46745562130177515,
+            0.5718849840255591,
+            0.6616541353383458,
+            0.75,
+            0.8333333333333334,
+            0.9
+          ]
+        }
+      }
+    }
+  },
+  "phase_3_fairness_audit": {
+    "execution_timestamp": "2026-10-25T10:20:37.988672+00:00",
+    "audit_threshold": 0.13,
+    "n_bootstrap_resamples": 1000,
+    "attributes_audited": [
+      "AGE",
+      "SEX",
+      "EDUCATION",
+      "MARRIAGE"
+    ],
+    "subgroup_audit": {
+      "AGE": {
+        "group_metrics": {
+          "Age < 30": {
+            "n_samples": 1414,
+            "approval_rate": 0.3699,
+            "tpr_default_recall": 0.879,
+            "fpr_false_alarm": 0.5591,
+            "brier_score": 0.1343
+          },
+          "Age >= 30": {
+            "n_samples": 3086,
+            "approval_rate": 0.417,
+            "tpr_default_recall": 0.8446,
+            "fpr_false_alarm": 0.5087,
+            "brier_score": 0.1374
+          }
+        },
+        "parity_metrics_95_ci": {
+          "demographic_parity_difference": {
+            "mean": 0.0477,
+            "ci_lower_95": 0.017,
+            "ci_upper_95": 0.0785
+          },
+          "disparate_impact_ratio": {
+            "mean": 0.8861,
+            "ci_lower_95": 0.8146,
+            "ci_upper_95": 0.9586
+          },
+          "equal_opportunity_difference": {
+            "mean": 0.0358,
+            "ci_lower_95": 0.0031,
+            "ci_upper_95": 0.0795
+          }
+        },
+        "compared_groups": [
+          "Age < 30",
+          "Age >= 30"
+        ]
+      },
+      "SEX": {
+        "group_metrics": {
+          "Female": {
+            "n_samples": 2734,
+            "approval_rate": 0.4126,
+            "tpr_default_recall": 0.8668,
+            "fpr_false_alarm": 0.5174,
+            "brier_score": 0.1233
+          },
+          "Male": {
+            "n_samples": 1766,
+            "approval_rate": 0.3862,
+            "tpr_default_recall": 0.8415,
+            "fpr_false_alarm": 0.5364,
+            "brier_score": 0.1568
+          }
+        },
+        "parity_metrics_95_ci": {
+          "demographic_parity_difference": {
+            "mean": 0.0263,
+            "ci_lower_95": 0.002,
+            "ci_upper_95": 0.0547
+          },
+          "disparate_impact_ratio": {
+            "mean": 0.9367,
+            "ci_lower_95": 0.8703,
+            "ci_upper_95": 0.995
+          },
+          "equal_opportunity_difference": {
+            "mean": 0.029,
+            "ci_lower_95": 0.0015,
+            "ci_upper_95": 0.0706
+          }
+        },
+        "compared_groups": [
+          "Male",
+          "Female"
+        ]
+      },
+      "EDUCATION": {
+        "group_metrics": {
+          "Graduate School": {
+            "n_samples": 1580,
+            "approval_rate": 0.4677,
+            "tpr_default_recall": 0.8281,
+            "fpr_false_alarm": 0.4571,
+            "brier_score": 0.1277
+          },
+          "High School": {
+            "n_samples": 766,
+            "approval_rate": 0.3264,
+            "tpr_default_recall": 0.8426,
+            "fpr_false_alarm": 0.6151,
+            "brier_score": 0.1599
+          },
+          "Others": {
+            "n_samples": 68,
+            "approval_rate": 0.5294,
+            "tpr_default_recall": 1.0,
+            "fpr_false_alarm": 0.4545,
+            "brier_score": 0.0277
+          },
+          "University": {
+            "n_samples": 2086,
+            "approval_rate": 0.3763,
+            "tpr_default_recall": 0.8784,
+            "fpr_false_alarm": 0.5482,
+            "brier_score": 0.1381
+          }
+        },
+        "parity_metrics_95_ci": {
+          "demographic_parity_difference": {
+            "mean": 0.0913,
+            "ci_lower_95": 0.06,
+            "ci_upper_95": 0.1244
+          },
+          "disparate_impact_ratio": {
+            "mean": 0.8054,
+            "ci_lower_95": 0.7459,
+            "ci_upper_95": 0.8673
+          },
+          "equal_opportunity_difference": {
+            "mean": 0.0508,
+            "ci_lower_95": 0.0061,
+            "ci_upper_95": 0.0982
+          }
+        },
+        "compared_groups": [
+          "University",
+          "Graduate School"
+        ]
+      },
+      "MARRIAGE": {
+        "group_metrics": {
+          "Married": {
+            "n_samples": 2063,
+            "approval_rate": 0.4014,
+            "tpr_default_recall": 0.8614,
+            "fpr_false_alarm": 0.515,
+            "brier_score": 0.1426
+          },
+          "Others": {
+            "n_samples": 54,
+            "approval_rate": 0.3148,
+            "tpr_default_recall": 0.8889,
+            "fpr_false_alarm": 0.6444,
+            "brier_score": 0.1251
+          },
+          "Single": {
+            "n_samples": 2383,
+            "approval_rate": 0.405,
+            "tpr_default_recall": 0.8487,
+            "fpr_false_alarm": 0.5296,
+            "brier_score": 0.1314
+          }
+        },
+        "parity_metrics_95_ci": {
+          "demographic_parity_difference": {
+            "mean": 0.0122,
+            "ci_lower_95": 0.0004,
+            "ci_upper_95": 0.0341
+          },
+          "disparate_impact_ratio": {
+            "mean": 0.9705,
+            "ci_lower_95": 0.9191,
+            "ci_upper_95": 0.999
+          },
+          "equal_opportunity_difference": {
+            "mean": 0.0206,
+            "ci_lower_95": 0.0008,
+            "ci_upper_95": 0.0562
+          }
+        },
+        "compared_groups": [
+          "Married",
+          "Single"
+        ]
+      }
+    },
+    "model_comparison": {
+      "with_age": {
+        "features_count": 9,
+        "roc_auc": 0.7759,
+        "pr_auc": 0.5507,
+        "brier_score": 0.1365,
+        "age_dpd": {
+          "mean": 0.0477,
+          "ci_lower_95": 0.017,
+          "ci_upper_95": 0.0785
+        },
+        "age_dir": {
+          "mean": 0.8861,
+          "ci_lower_95": 0.8146,
+          "ci_upper_95": 0.9586
+        },
+        "age_eod": {
+          "mean": 0.0358,
+          "ci_lower_95": 0.0031,
+          "ci_upper_95": 0.0795
+        }
+      },
+      "without_age": {
+        "features_count": 8,
+        "roc_auc": 0.7762,
+        "pr_auc": 0.5518,
+        "brier_score": 0.1363,
+        "age_dpd": {
+          "mean": 0.0494,
+          "ci_lower_95": 0.0169,
+          "ci_upper_95": 0.0791
+        },
+        "age_dir": {
+          "mean": 0.8839,
+          "ci_lower_95": 0.8175,
+          "ci_upper_95": 0.9585
+        },
+        "age_eod": {
+          "mean": 0.0369,
+          "ci_lower_95": 0.0032,
+          "ci_upper_95": 0.0789
+        }
+      },
+      "delta_roc_auc": 0.0003,
+      "age_recommendation": "RETAIN_AGE_AS_FROZEN_SENSITIVE",
+      "age_decision_rationale": "AGE provides predictive discrimination (ROC-AUC drop = 0.0003) reflecting repayment lifecycle length. Crucially, AGE is classified as mutability='sensitive' and strictly frozen in counterfactual explanations so that applicants are never asked to alter their age to obtain credit approval."
+    }
+  },
+  "phase_4_explanation_validity": {
+    "metadata": {
+      "execution_timestamp": "2026-10-25T10:30:40.497738+00:00",
+      "test_sample_size": 4500,
+      "perturbation_sample_size": 200,
+      "bootstrap_iterations": 100,
+      "background_data_size": 100
+    },
+    "additivity_sanity_check": {
+      "status": "PASS",
+      "is_exact_by_construction": true,
+      "scientific_note": "TreeSHAP satisfies local accuracy by construction. Additivity is recorded as an operational software sanity check against link corruption or numerical drift, not an empirical discovery.",
+      "max_residual": 1.796210373328222e-06,
+      "mean_residual": 3.989648693292214e-07,
+      "tolerance": 0.0001
+    },
+    "shap_vs_permutation_importance": {
+      "spearman_rho": 0.9833,
+      "p_value": 1.936196303745925e-06,
+      "shap_ranking": [
+        "CREDIT_BUREAU_SCORE",
+        "FOIR_RATIO",
+        "LTV_RATIO",
+        "AMT_CREDIT",
+        "AMT_ANNUITY",
+        "PAST_DELINQUENCIES",
+        "AMT_INCOME_TOTAL",
+        "DAYS_EMPLOYED",
+        "AGE"
+      ],
+      "permutation_ranking": [
+        "CREDIT_BUREAU_SCORE",
+        "FOIR_RATIO",
+        "LTV_RATIO",
+        "AMT_CREDIT",
+        "AMT_ANNUITY",
+        "PAST_DELINQUENCIES",
+        "DAYS_EMPLOYED",
+        "AMT_INCOME_TOTAL",
+        "AGE"
+      ],
+      "shap_values": {
+        "FOIR_RATIO": 0.213761,
+        "LTV_RATIO": 0.138514,
+        "CREDIT_BUREAU_SCORE": 0.607656,
+        "PAST_DELINQUENCIES": 0.083581,
+        "DAYS_EMPLOYED": 0.029139,
+        "AGE": 0.009667,
+        "AMT_CREDIT": 0.123665,
+        "AMT_ANNUITY": 0.123627,
+        "AMT_INCOME_TOTAL": 0.0495
+      },
+      "permutation_values": {
+        "FOIR_RATIO": 0.026714,
+        "LTV_RATIO": 0.011744,
+        "CREDIT_BUREAU_SCORE": 0.156688,
+        "PAST_DELINQUENCIES": 0.00438,
+        "DAYS_EMPLOYED": 0.001132,
+        "AGE": 0.000275,
+        "AMT_CREDIT": 0.008336,
+        "AMT_ANNUITY": 0.007148,
+        "AMT_INCOME_TOTAL": 0.001043
+      }
+    },
+    "bootstrap_stability": {
+      "n_resamples": 100,
+      "mean_jaccard_vs_full": 1.0,
+      "ci_95_jaccard_vs_full": [
+        1.0,
+        1.0
+      ],
+      "mean_pairwise_jaccard": 1.0,
+      "full_test_top5": [
+        "CREDIT_BUREAU_SCORE",
+        "FOIR_RATIO",
+        "LTV_RATIO",
+        "AMT_CREDIT",
+        "AMT_ANNUITY"
+      ]
+    },
+    "perturbation_stability": {
+      "epsilon_std_ratio": 0.01,
+      "sample_size": 200,
+      "mean_top5_jaccard": 0.8538,
+      "ci_95_top5_jaccard": [
+        0.6667,
+        1.0
+      ],
+      "mean_spearman_correlation": 0.7895,
+      "ci_95_spearman_correlation": [
+        0.3333,
+        1.0
+      ]
+    },
+    "faithfulness_and_monotonicity": {
+      "sample_size": 200,
+      "audc_shap_deletion": 0.1313,
+      "audc_random_deletion": 0.0803,
+      "deletion_faithfulness_gain": 0.051,
+      "auic_shap_insertion": 0.134,
+      "auic_random_insertion": 0.0797,
+      "insertion_faithfulness_gain": 0.0543,
+      "mean_monotonicity_spearman": 0.3263,
+      "ci_95_monotonicity_spearman": [
+        -0.2385,
+        0.9171
+      ],
+      "mean_deletion_curve_shap": [
+        0.0,
+        0.0905,
+        0.1221,
+        0.1375,
+        0.146,
+        0.1496,
+        0.1518,
+        0.1536,
+        0.1537,
+        0.1535
+      ],
+      "mean_deletion_curve_random": [
+        0.0,
+        0.02,
+        0.0404,
+        0.0552,
+        0.0732,
+        0.0844,
+        0.1073,
+        0.1269,
+        0.1389,
+        0.1535
+      ],
+      "mean_insertion_curve_shap": [
+        0.0,
+        0.0908,
+        0.1322,
+        0.1499,
+        0.1506,
+        0.1512,
+        0.1515,
+        0.1509,
+        0.1525,
+        0.1535
+      ],
+      "mean_insertion_curve_random": [
+        0.0,
+        0.0173,
+        0.0382,
+        0.0527,
+        0.0733,
+        0.0825,
+        0.1078,
+        0.1281,
+        0.1408,
+        0.1535
+      ]
+    }
+  },
+  "phase_5_counterfactual_evaluation": {
+    "metadata": {
+      "execution_timestamp": "2026-10-25T10:48:19.650136+00:00",
+      "cohort_sample_size": 200,
+      "target_threshold": 0.35,
+      "total_cfs_per_applicant": 3,
+      "bootstrap_iterations": 1000,
+      "dataset": "data/processed/test.csv"
+    },
+    "metrics_with_95_ci": {
+      "validity_rate": {
+        "mean": 0.1767,
+        "ci_lower_95": 0.1283,
+        "ci_upper_95": 0.225
+      },
+      "actionability_rate": {
+        "mean": 0.1767,
+        "ci_lower_95": 0.1283,
+        "ci_upper_95": 0.225
+      },
+      "feasible_applicant_rate": {
+        "mean": 0.205,
+        "ci_lower_95": 0.155,
+        "ci_upper_95": 0.26
+      },
+      "proximity_l1_normalized": {
+        "mean": 0.0745,
+        "ci_lower_95": 0.0624,
+        "ci_upper_95": 0.0881
+      },
+      "sparsity_features_changed": {
+        "mean": 1.4797,
+        "ci_lower_95": 1.3821,
+        "ci_upper_95": 1.5854
+      },
+      "latency_ms": {
+        "mean": 2153.0511,
+        "ci_lower_95": 792.2022,
+        "ci_upper_95": 3860.1065
+      },
+      "dice_failure_rate": 0.38,
+      "fallback_search_rate": 0.385
+    },
+    "immutability_enforcement": {
+      "protected_attributes_frozen": [
+        "AGE",
+        "SEX",
+        "EDUCATION",
+        "MARRIAGE"
+      ],
+      "bureau_history_frozen": [
+        "CREDIT_BUREAU_SCORE",
+        "PAST_DELINQUENCIES",
+        "DAYS_EMPLOYED"
+      ],
+      "financial_history_frozen": [
+        "AMT_INCOME_TOTAL",
+        "EXISTING_DEBT_OBLIGATIONS"
+      ],
+      "actionable_levers_allowed": [
+        "AMT_CREDIT",
+        "AMT_ANNUITY",
+        "AMT_GOODS_PRICE"
+      ],
+      "derived_features_recomputed": [
+        "FOIR_RATIO",
+        "LTV_RATIO"
+      ]
+    }
+  },
+  "retrieval_evaluation": {
+    "status": "BLOCKED_PENDING_HUMAN_LABELS",
+    "reason": "Per Model Risk Directive, candidate queries and candidate clauses must be labelled by human credit risk experts before reporting Recall@k, MRR, nDCG, or ablation metrics. No self-labelling or simulated benchmark numbers are permitted.",
+    "candidate_queries_drafted": 64,
+    "candidate_file": "tests/evaluation/to_label.csv",
+    "official_corpus_documents": [
+      "fed_sr11_7.pdf",
+      "basel_credit_risk.pdf",
+      "rbi_digital_lending_2025.pdf",
+      "rbi_fair_practices_code.pdf"
+    ],
+    "corpus_chunks_count": 80,
+    "index_version": "88a27219758132e08a17dbcaca7da6220fc34b22803ad60f2214b8d33b09164e"
+  },
+  "phase_7_security": {
+    "authentication": {
+      "algorithm": "PBKDF2-HMAC-SHA256 (100,000 iterations)",
+      "token_type": "HS256 JWT with server-side role claims",
+      "token_expiry_minutes": 60,
+      "forged_header_status": "401 Unauthorized (untrusted X-User-Role rejected)",
+      "unsigned_alg_none_status": "401 Unauthorized",
+      "expired_token_status": "401 Unauthorized",
+      "role_escalation_status": "403 Forbidden (verified against server-side claim)"
+    },
+    "prompt_injection_defense": {
+      "total_adversarial_variants": 25,
+      "caught_count": 25,
+      "missed_count": 0,
+      "catch_rate_pct": 100.0,
+      "total_benign_controls": 5,
+      "true_negatives": 5,
+      "false_positives": 0,
+      "specificity_pct": 100.0,
+      "defense_architecture": "Multi-layered: Unicode NFKC normalization, zero-width stripping, Cyrillic homoglyph translation, cryptographic nonced XML passive data isolation (<untrusted_policy_data nonce='...'>), LLM special token neutralization ([INST], <<SYS>>, <|im_start|>), Base64/Hex payload inspection, and multilingual override detection (7 sovereign languages)."
+    },
+    "missed_variants": []
+  }
+}

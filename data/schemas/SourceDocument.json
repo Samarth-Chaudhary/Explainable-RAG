@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "An individual indexed passage of an authoritative policy document.",
+      "properties": {
+        "chunk_id": {
+          "description": "Unique chunk identifier: e.g. 'DOC-001-P4-C2'",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "source_id": {
+          "description": "Parent source document ID",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "text": {
+          "description": "Extracted textual content of the chunk",
+          "title": "Text",
+          "type": "string"
+        },
+        "page_number": {
+          "description": "Original PDF page number",
+          "minimum": 1,
+          "title": "Page Number",
+          "type": "integer"
+        },
+        "section_title": {
+          "description": "Heading or clause label",
+          "title": "Section Title",
+          "type": "string"
+        },
+        "token_count": {
+          "description": "Approximate token length",
+          "minimum": 0,
+          "title": "Token Count",
+          "type": "integer"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "description": "Custom chunk metadata tags",
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "source_id",
+        "text",
+        "page_number",
+        "section_title",
+        "token_count"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Complete ingested policy document.",
+  "properties": {
+    "source_id": {
+      "description": "Unique source identifier",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "title": {
+      "description": "Official title",
+      "title": "Title",
+      "type": "string"
+    },
+    "issuer": {
+      "description": "Issuing authority",
+      "title": "Issuer",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "description": "Jurisdiction",
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "version": {
+      "description": "Version or circular reference",
+      "title": "Version",
+      "type": "string"
+    },
+    "effective_date": {
+      "description": "Effective date",
+      "title": "Effective Date",
+      "type": "string"
+    },
+    "file_path": {
+      "description": "Local storage path",
+      "title": "File Path",
+      "type": "string"
+    },
+    "sha256_hash": {
+      "description": "SHA-256 integrity hash",
+      "title": "Sha256 Hash",
+      "type": "string"
+    },
+    "total_pages": {
+      "description": "Total page count",
+      "minimum": 1,
+      "title": "Total Pages",
+      "type": "integer"
+    },
+    "chunks": {
+      "description": "Extracted chunks",
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      },
+      "title": "Chunks",
+      "type": "array"
+    }
+  },
+  "required": [
+    "source_id",
+    "title",
+    "issuer",
+    "jurisdiction",
+    "version",
+    "effective_date",
+    "file_path",
+    "sha256_hash",
+    "total_pages"
+  ],
+  "title": "SourceDocument",
+  "type": "object"
+}

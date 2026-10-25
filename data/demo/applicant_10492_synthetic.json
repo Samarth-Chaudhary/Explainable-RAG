@@ -1,0 +1,15 @@
+{
+  "applicant_id": "APPLICANT-10492-SYNTHETIC-FIXTURE",
+  "applicant_ref": "APP-10492",
+  "data_mode": "synthetic_test_fixture",
+  "_notes": "Synthetic fixture for unit testing only. Not for production scoring.",
+  "AMT_CREDIT": 50000.0,
+  "AMT_ANNUITY": 2800.0,
+  "AMT_GOODS_PRICE": 69547.5,
+  "AMT_INCOME_TOTAL": 15000.0,
+  "EXISTING_DEBT_OBLIGATIONS": 26742.5,
+  "DAYS_EMPLOYED": -2848.95,
+  "AGE": 32.0,
+  "CREDIT_BUREAU_SCORE": 735.0,
+  "PAST_DELINQUENCIES": 2
+}

@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - XAI_MODE=demo
+      - XAI_MODEL_PATH=data/demo/model.json
+      - XAI_MODEL_MANIFEST_PATH=data/demo/model_manifest.json
+      - XAI_FEATURE_SCHEMA_PATH=data/demo/feature_schema.json
+      - XAI_BACKGROUND_DATA_PATH=data/demo/explainer_background.json
+      - XAI_THRESHOLD_VALUE=0.35
+      - XAI_THRESHOLD_SOURCE="Credit Risk Committee Policy Manual v2.4 (Synthetic Fixture)"
+      - XAI_THRESHOLD_OWNER="Head of Credit Underwriting & Risk Governance"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

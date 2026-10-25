@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "description": "Standardized API and service error envelope.",
+  "properties": {
+    "error_code": {
+      "description": "Standard error identifier: e.g. 'VALIDATION_ERROR'",
+      "title": "Error Code",
+      "type": "string"
+    },
+    "message": {
+      "description": "Human-readable error explanation",
+      "title": "Message",
+      "type": "string"
+    },
+    "details": {
+      "description": "Field-specific error details",
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Details",
+      "type": "array"
+    },
+    "timestamp": {
+      "description": "Error occurrence timestamp",
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "error_code",
+    "message",
+    "timestamp"
+  ],
+  "title": "ErrorEnvelope",
+  "type": "object"
+}

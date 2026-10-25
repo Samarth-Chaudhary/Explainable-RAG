@@ -1,0 +1,100 @@
+{
+  "$defs": {
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "An individual indexed passage of an authoritative policy document.",
+      "properties": {
+        "chunk_id": {
+          "description": "Unique chunk identifier: e.g. 'DOC-001-P4-C2'",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "source_id": {
+          "description": "Parent source document ID",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "text": {
+          "description": "Extracted textual content of the chunk",
+          "title": "Text",
+          "type": "string"
+        },
+        "page_number": {
+          "description": "Original PDF page number",
+          "minimum": 1,
+          "title": "Page Number",
+          "type": "integer"
+        },
+        "section_title": {
+          "description": "Heading or clause label",
+          "title": "Section Title",
+          "type": "string"
+        },
+        "token_count": {
+          "description": "Approximate token length",
+          "minimum": 0,
+          "title": "Token Count",
+          "type": "integer"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "description": "Custom chunk metadata tags",
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "source_id",
+        "text",
+        "page_number",
+        "section_title",
+        "token_count"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Verified evidence item bound to a specific policy claim.",
+  "properties": {
+    "evidence_id": {
+      "description": "Unique evidence identifier",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "chunk": {
+      "$ref": "#/$defs/Chunk",
+      "description": "Source chunk containing text"
+    },
+    "extracted_quote": {
+      "description": "Verbatim quote used in report",
+      "title": "Extracted Quote",
+      "type": "string"
+    },
+    "relevance_justification": {
+      "description": "Explanation of why this clause applies",
+      "title": "Relevance Justification",
+      "type": "string"
+    },
+    "verification_status": {
+      "default": "unverified",
+      "description": "Quote verification status",
+      "enum": [
+        "verified",
+        "unverified",
+        "failed"
+      ],
+      "title": "Verification Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "chunk",
+    "extracted_quote",
+    "relevance_justification"
+  ],
+  "title": "RetrievedEvidence",
+  "type": "object"
+}

@@ -1,0 +1,338 @@
+{
+  "ontology_version": "1.0.0",
+  "domain": "retail_and_commercial_credit_risk",
+  "records": [
+    {
+      "feature_name": "FOIR_RATIO",
+      "label": "Fixed Obligation to Income Ratio",
+      "plain_language_definition": "Share of eligible monthly income absorbed by recurring debt obligations",
+      "unit": "ratio",
+      "feature_type": "derived",
+      "formula": "(AMT_ANNUITY + EXISTING_DEBT_OBLIGATIONS) / AMT_INCOME_TOTAL",
+      "mutability": "derived_recompute",
+      "immutable_inputs": [
+        "EXISTING_DEBT_OBLIGATIONS",
+        "AMT_INCOME_TOTAL"
+      ],
+      "actionable_inputs": [
+        "AMT_ANNUITY"
+      ],
+      "legal_topics": [
+        "repayment_capacity",
+        "debt_burden",
+        "underwriting_affordability"
+      ],
+      "metadata_tags": [
+        "FOIR_Cap",
+        "Affordability_Assessment",
+        "Debt_Burden_Limits"
+      ],
+      "lexical_terms": [
+        "FOIR",
+        "fixed obligations",
+        "debt burden",
+        "repayment capacity",
+        "debt to income"
+      ],
+      "semantic_template": "Applicant FOIR ratio is {current}; feasible target is {target}. Identify applicable underwriting limits and permissible restructuring remedies.",
+      "source_families": [
+        "RBI_official",
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "LTV_RATIO",
+      "label": "Loan to Value Ratio",
+      "plain_language_definition": "Proportion of loan exposure relative to appraised collateral asset value",
+      "unit": "ratio",
+      "feature_type": "derived",
+      "formula": "AMT_CREDIT / AMT_GOODS_PRICE",
+      "mutability": "derived_recompute",
+      "immutable_inputs": [],
+      "actionable_inputs": [
+        "AMT_CREDIT",
+        "AMT_GOODS_PRICE"
+      ],
+      "legal_topics": [
+        "collateral_haircut",
+        "exposure_limits",
+        "prudential_ltv_cap"
+      ],
+      "metadata_tags": [
+        "LTV_Cap",
+        "Collateral_Pledge",
+        "Prudential_Exposure"
+      ],
+      "lexical_terms": [
+        "LTV",
+        "loan to value",
+        "collateral haircut",
+        "exposure cap",
+        "security margin"
+      ],
+      "semantic_template": "Applicant LTV exposure is {current}; feasible target is {target}. Identify regulatory collateral caps and additional security requirements.",
+      "source_families": [
+        "RBI_official",
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "AMT_ANNUITY",
+      "label": "Monthly Installment Amount",
+      "plain_language_definition": "Scheduled monthly principal and interest payment",
+      "unit": "INR",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "actionable",
+      "immutable_inputs": [],
+      "actionable_inputs": [
+        "AMT_ANNUITY"
+      ],
+      "legal_topics": [
+        "tenor_extension",
+        "repayment_rescheduling",
+        "debt_service"
+      ],
+      "metadata_tags": [
+        "Tenor_Policy",
+        "Restructuring_Rules"
+      ],
+      "lexical_terms": [
+        "tenor extension",
+        "monthly installment",
+        "repayment term",
+        "loan restructuring"
+      ],
+      "semantic_template": "Loan installment adjustment to {target} via loan tenor modification under approved guidelines.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "AMT_CREDIT",
+      "label": "Loan Amount Requested",
+      "plain_language_definition": "Total principal exposure sanctioned under the credit facility",
+      "unit": "INR",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "actionable",
+      "immutable_inputs": [],
+      "actionable_inputs": [
+        "AMT_CREDIT"
+      ],
+      "legal_topics": [
+        "credit_exposure",
+        "prudential_limits",
+        "sanction_threshold"
+      ],
+      "metadata_tags": [
+        "Exposure_Ceiling",
+        "Credit_Sanction"
+      ],
+      "lexical_terms": [
+        "loan amount",
+        "credit limit",
+        "principal exposure",
+        "sanction amount"
+      ],
+      "semantic_template": "Applicant requested loan amount {current}; proposed scenario {target}. Identify single-borrower exposure ceilings.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "AMT_GOODS_PRICE",
+      "label": "Collateral Property Valuation",
+      "plain_language_definition": "Independent appraised market value of property or goods offered as collateral",
+      "unit": "INR",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "actionable",
+      "immutable_inputs": [],
+      "actionable_inputs": [
+        "AMT_GOODS_PRICE"
+      ],
+      "legal_topics": [
+        "collateral_valuation",
+        "appraisal_standards",
+        "security_perfection"
+      ],
+      "metadata_tags": [
+        "Collateral_Valuation",
+        "Asset_Appraisal"
+      ],
+      "lexical_terms": [
+        "collateral value",
+        "property appraisal",
+        "asset security",
+        "goods price"
+      ],
+      "semantic_template": "Collateral valuation {current}; proposed pledged security {target}. Identify independent valuation and haircut policies.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "EXT_SOURCE_2",
+      "label": "External Credit Bureau Score 2",
+      "plain_language_definition": "Normalized credit bureau risk score from independent commercial reporting agencies (SYNTHETIC DEMO PLACEHOLDER)",
+      "unit": "score",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "immutable",
+      "immutable_inputs": [
+        "EXT_SOURCE_2"
+      ],
+      "actionable_inputs": [],
+      "legal_topics": [
+        "credit_bureau_reporting",
+        "credit_information_companies",
+        "adverse_history"
+      ],
+      "metadata_tags": [
+        "Bureau_Score",
+        "Credit_History"
+      ],
+      "lexical_terms": [
+        "credit score",
+        "bureau score",
+        "credit report",
+        "repayment track"
+      ],
+      "semantic_template": "Applicant credit bureau score is {current}. Review bureau minimum score cutoff requirements.",
+      "source_families": [
+        "RBI_official",
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "AMT_INCOME_TOTAL",
+      "label": "Verified Monthly Eligible Income",
+      "plain_language_definition": "Total monthly gross documented income verified via tax returns and bank statements",
+      "unit": "INR",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "immutable",
+      "immutable_inputs": [
+        "AMT_INCOME_TOTAL"
+      ],
+      "actionable_inputs": [],
+      "legal_topics": [
+        "income_verification",
+        "underwriting_eligibility"
+      ],
+      "metadata_tags": [
+        "Income_Assessment",
+        "Financial_Documents"
+      ],
+      "lexical_terms": [
+        "monthly income",
+        "eligible income",
+        "salary certificate",
+        "income verification"
+      ],
+      "semantic_template": "Verified income is {current}. Check income verification standards.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "EXISTING_DEBT_OBLIGATIONS",
+      "label": "Existing Monthly Fixed Debt Obligations",
+      "plain_language_definition": "Aggregate monthly debt servicing obligations across existing loans and credit cards",
+      "unit": "INR",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "immutable",
+      "immutable_inputs": [
+        "EXISTING_DEBT_OBLIGATIONS"
+      ],
+      "actionable_inputs": [],
+      "legal_topics": [
+        "debt_burden",
+        "prior_commitments"
+      ],
+      "metadata_tags": [
+        "Debt_Obligations",
+        "Existing_Liabilities"
+      ],
+      "lexical_terms": [
+        "existing loans",
+        "monthly EMI obligations",
+        "debt servicing"
+      ],
+      "semantic_template": "Existing debt obligations {current}. Evaluate consolidation rules.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "DAYS_EMPLOYED",
+      "label": "Employment Duration",
+      "plain_language_definition": "Number of days with current employer or operational business tenure (negative count in days)",
+      "unit": "days",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "immutable",
+      "immutable_inputs": [
+        "DAYS_EMPLOYED"
+      ],
+      "actionable_inputs": [],
+      "legal_topics": [
+        "employment_stability",
+        "vintage_requirements"
+      ],
+      "metadata_tags": [
+        "Employment_Tenure",
+        "Stability_Criteria"
+      ],
+      "lexical_terms": [
+        "job stability",
+        "employment vintage",
+        "years in business"
+      ],
+      "semantic_template": "Tenure with current organization is {current} days. Check vintage minimums.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    },
+    {
+      "feature_name": "DAYS_BIRTH",
+      "label": "Applicant Age (Days)",
+      "plain_language_definition": "Age of borrower in negative days relative to application date",
+      "unit": "days",
+      "feature_type": "primitive",
+      "formula": null,
+      "mutability": "immutable",
+      "immutable_inputs": [
+        "DAYS_BIRTH"
+      ],
+      "actionable_inputs": [],
+      "legal_topics": [
+        "age_eligibility",
+        "borrower_criteria"
+      ],
+      "metadata_tags": [
+        "Age_Limits"
+      ],
+      "lexical_terms": [
+        "borrower age",
+        "maximum age at maturity"
+      ],
+      "semantic_template": "Applicant age days {current}. Check minimum and maximum age criteria.",
+      "source_families": [
+        "internal_credit_policy"
+      ],
+      "ontology_version": "1.0.0"
+    }
+  ]
+}

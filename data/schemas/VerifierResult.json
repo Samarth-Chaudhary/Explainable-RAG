@@ -1,0 +1,44 @@
+{
+  "additionalProperties": false,
+  "description": "Result of exact substring and citation verification.",
+  "properties": {
+    "total_citations": {
+      "description": "Total cited quotes evaluated",
+      "title": "Total Citations",
+      "type": "integer"
+    },
+    "passed_citations": {
+      "description": "Quotes confirmed in source text",
+      "title": "Passed Citations",
+      "type": "integer"
+    },
+    "failed_citations": {
+      "description": "Quotes not found in source text",
+      "title": "Failed Citations",
+      "type": "integer"
+    },
+    "faithfulness_score": {
+      "description": "Ratio of passed to total citations",
+      "title": "Faithfulness Score",
+      "type": "number"
+    },
+    "citation_details": {
+      "description": "Itemized match outcomes",
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Citation Details",
+      "type": "array"
+    }
+  },
+  "required": [
+    "total_citations",
+    "passed_citations",
+    "failed_citations",
+    "faithfulness_score",
+    "citation_details"
+  ],
+  "title": "VerifierResult",
+  "type": "object"
+}

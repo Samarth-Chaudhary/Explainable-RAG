@@ -1,0 +1,46 @@
+{
+  "additionalProperties": false,
+  "description": "Payload produced by ontology translator for hybrid FAISS + BM25 search.",
+  "properties": {
+    "dense_query": {
+      "description": "Dense semantic search query text",
+      "title": "Dense Query",
+      "type": "string"
+    },
+    "bm25_terms": {
+      "description": "Lexical keyword search terms",
+      "items": {
+        "type": "string"
+      },
+      "title": "Bm25 Terms",
+      "type": "array"
+    },
+    "metadata_filters": {
+      "additionalProperties": true,
+      "description": "Metadata filters: e.g. jurisdiction, source_family, status",
+      "title": "Metadata Filters",
+      "type": "object"
+    },
+    "top_k": {
+      "default": 5,
+      "description": "Number of chunks to retrieve",
+      "minimum": 1,
+      "title": "Top K",
+      "type": "integer"
+    },
+    "source_families": {
+      "description": "Target source categories",
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Families",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dense_query",
+    "bm25_terms"
+  ],
+  "title": "HybridQueryPayload",
+  "type": "object"
+}

@@ -1,0 +1,42 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Python Cache & Coverage
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data, exports, databases
+data/exports/*
+!data/exports/.gitkeep
+data/raw/
+data/cache/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Environment variables & local secrets
+.env
+.env.local
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+frontend/dist/
+
+# Logs & temp
+*.log
+.system_generated/

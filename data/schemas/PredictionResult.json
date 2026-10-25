@@ -1,0 +1,153 @@
+{
+  "$defs": {
+    "ModelMetadataSummary": {
+      "additionalProperties": false,
+      "description": "Essential model identification and calibration summary.",
+      "properties": {
+        "name": {
+          "description": "Model name",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "description": "Model version",
+          "title": "Version",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "description": "Cryptographic SHA-256 hash of model artifact",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "calibration_status": {
+          "description": "Calibration status: 'none', 'platt', 'isotonic'",
+          "title": "Calibration Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "artifact_sha256",
+        "calibration_status"
+      ],
+      "title": "ModelMetadataSummary",
+      "type": "object"
+    },
+    "ThresholdConfig": {
+      "additionalProperties": false,
+      "description": "Decision threshold configuration and ownership.",
+      "properties": {
+        "value": {
+          "description": "Decision threshold cutoff value",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Value",
+          "type": "number"
+        },
+        "source": {
+          "description": "Policy or committee document establishing threshold",
+          "title": "Source",
+          "type": "string"
+        },
+        "owner": {
+          "description": "Accountable executive or committee owner",
+          "title": "Owner",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "source",
+        "owner"
+      ],
+      "title": "ThresholdConfig",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Typed result of deterministic model inference (P1.0 handoff).",
+  "properties": {
+    "schema_version": {
+      "default": "1.0.0",
+      "description": "Contract schema version",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelMetadataSummary",
+      "description": "Model lineage and integrity summary"
+    },
+    "raw_output": {
+      "description": "Raw model score (log-odds margin for logistic XGBoost)",
+      "title": "Raw Output",
+      "type": "number"
+    },
+    "default_probability": {
+      "description": "Predicted default probability [0.0, 1.0]",
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Default Probability",
+      "type": "number"
+    },
+    "calibrated_probability": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Calibrated probability if model supports calibration; otherwise None",
+      "title": "Calibrated Probability"
+    },
+    "threshold": {
+      "$ref": "#/$defs/ThresholdConfig",
+      "description": "Configured decision threshold with named owner"
+    },
+    "decision_label": {
+      "description": "Operational decision: e.g. 'REJECT_HIGH_RISK' or 'APPROVE_LOW_RISK'",
+      "title": "Decision Label",
+      "type": "string"
+    },
+    "output_notes": {
+      "description": "Explanatory notes on calibration, link function, and threshold rule",
+      "title": "Output Notes",
+      "type": "string"
+    },
+    "inference_timestamp": {
+      "description": "UTC timestamp of inference execution",
+      "format": "date-time",
+      "title": "Inference Timestamp",
+      "type": "string"
+    },
+    "feature_order_hash": {
+      "description": "SHA-256 hash of canonical evaluated feature order",
+      "title": "Feature Order Hash",
+      "type": "string"
+    },
+    "features_evaluated": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "Final evaluated feature vector (primitive and derived values)",
+      "title": "Features Evaluated",
+      "type": "object"
+    }
+  },
+  "required": [
+    "model",
+    "raw_output",
+    "default_probability",
+    "threshold",
+    "decision_label",
+    "output_notes",
+    "inference_timestamp",
+    "feature_order_hash",
+    "features_evaluated"
+  ],
+  "title": "PredictionResult",
+  "type": "object"
+}

@@ -1,0 +1,129 @@
+{
+  "additionalProperties": false,
+  "description": "Semantic mapping definition for an individual credit feature.",
+  "properties": {
+    "feature_name": {
+      "description": "Programmatic feature identifier",
+      "title": "Feature Name",
+      "type": "string"
+    },
+    "label": {
+      "description": "Business display label",
+      "title": "Label",
+      "type": "string"
+    },
+    "plain_language_definition": {
+      "description": "Non-technical plain language explanation",
+      "title": "Plain Language Definition",
+      "type": "string"
+    },
+    "unit": {
+      "description": "Measurement unit",
+      "title": "Unit",
+      "type": "string"
+    },
+    "feature_type": {
+      "description": "'primitive' or 'derived'",
+      "enum": [
+        "primitive",
+        "derived"
+      ],
+      "title": "Feature Type",
+      "type": "string"
+    },
+    "formula": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Derivation formula if derived",
+      "title": "Formula"
+    },
+    "mutability": {
+      "description": "Mutability classification",
+      "enum": [
+        "immutable",
+        "actionable",
+        "derived_recompute",
+        "sensitive"
+      ],
+      "title": "Mutability",
+      "type": "string"
+    },
+    "immutable_inputs": {
+      "description": "Underlying unalterable inputs",
+      "items": {
+        "type": "string"
+      },
+      "title": "Immutable Inputs",
+      "type": "array"
+    },
+    "actionable_inputs": {
+      "description": "Underlying actionable inputs",
+      "items": {
+        "type": "string"
+      },
+      "title": "Actionable Inputs",
+      "type": "array"
+    },
+    "legal_topics": {
+      "description": "Associated regulatory topics",
+      "items": {
+        "type": "string"
+      },
+      "title": "Legal Topics",
+      "type": "array"
+    },
+    "metadata_tags": {
+      "description": "Indexing and policy tags",
+      "items": {
+        "type": "string"
+      },
+      "title": "Metadata Tags",
+      "type": "array"
+    },
+    "lexical_terms": {
+      "description": "Search terms for BM25 retrieval",
+      "items": {
+        "type": "string"
+      },
+      "title": "Lexical Terms",
+      "type": "array"
+    },
+    "semantic_template": {
+      "description": "Query template for dense embedding generation",
+      "title": "Semantic Template",
+      "type": "string"
+    },
+    "source_families": {
+      "description": "Authoritative document families",
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Families",
+      "type": "array"
+    },
+    "ontology_version": {
+      "default": "1.0",
+      "description": "Version of this ontology record",
+      "title": "Ontology Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "feature_name",
+    "label",
+    "plain_language_definition",
+    "unit",
+    "feature_type",
+    "mutability",
+    "semantic_template"
+  ],
+  "title": "OntologyRecord",
+  "type": "object"
+}

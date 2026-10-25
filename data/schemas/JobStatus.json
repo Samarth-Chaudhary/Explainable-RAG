@@ -1,0 +1,69 @@
+{
+  "additionalProperties": false,
+  "description": "Status tracking for asynchronous audit jobs.",
+  "properties": {
+    "job_id": {
+      "description": "Unique job identifier",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "status": {
+      "description": "Current status",
+      "enum": [
+        "queued",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "progress_percentage": {
+      "description": "Completion percentage",
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Progress Percentage",
+      "type": "integer"
+    },
+    "current_step": {
+      "description": "Active pipeline stage",
+      "title": "Current Step",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Failure reason if status is failed",
+      "title": "Error"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Completion timestamp",
+      "title": "Completed At"
+    }
+  },
+  "required": [
+    "job_id",
+    "status",
+    "progress_percentage",
+    "current_step"
+  ],
+  "title": "JobStatus",
+  "type": "object"
+}

@@ -1,0 +1,109 @@
+{
+  "additionalProperties": false,
+  "description": "Lineage and provenance metadata for an ingested policy document.",
+  "properties": {
+    "source_id": {
+      "description": "Unique source document identifier",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "title": {
+      "description": "Official title of the document",
+      "title": "Title",
+      "type": "string"
+    },
+    "issuer": {
+      "description": "Issuing regulatory body or internal committee",
+      "title": "Issuer",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "description": "Jurisdiction (e.g. 'IN', 'GLOBAL', 'US')",
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "source_family": {
+      "description": "Category family: e.g. 'statutory_circular', 'credit_policy'",
+      "title": "Source Family",
+      "type": "string"
+    },
+    "publication_date": {
+      "description": "Date document was published (YYYY-MM-DD)",
+      "title": "Publication Date",
+      "type": "string"
+    },
+    "effective_date": {
+      "description": "Date document took effect (YYYY-MM-DD)",
+      "title": "Effective Date",
+      "type": "string"
+    },
+    "version_or_update_date": {
+      "description": "Version number or amendment date",
+      "title": "Version Or Update Date",
+      "type": "string"
+    },
+    "status": {
+      "default": "active",
+      "description": "'active' or 'superseded'",
+      "enum": [
+        "active",
+        "superseded"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "official_url_or_owner": {
+      "description": "Authoritative source URL or policy custodian",
+      "title": "Official Url Or Owner",
+      "type": "string"
+    },
+    "sha256_hash": {
+      "description": "Cryptographic SHA-256 digest of original PDF/source file",
+      "title": "Sha256 Hash",
+      "type": "string"
+    },
+    "ingestion_timestamp": {
+      "description": "Timestamp of document ingestion into system",
+      "format": "date-time",
+      "title": "Ingestion Timestamp",
+      "type": "string"
+    },
+    "parser_status": {
+      "default": "pending",
+      "description": "Status of text extraction",
+      "enum": [
+        "pending",
+        "parsed",
+        "failed"
+      ],
+      "title": "Parser Status",
+      "type": "string"
+    },
+    "access_classification": {
+      "default": "internal_confidential",
+      "description": "Data classification level",
+      "enum": [
+        "public",
+        "internal_confidential",
+        "restricted"
+      ],
+      "title": "Access Classification",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_id",
+    "title",
+    "issuer",
+    "jurisdiction",
+    "source_family",
+    "publication_date",
+    "effective_date",
+    "version_or_update_date",
+    "official_url_or_owner",
+    "sha256_hash",
+    "ingestion_timestamp"
+  ],
+  "title": "SourceRegistryRecord",
+  "type": "object"
+}

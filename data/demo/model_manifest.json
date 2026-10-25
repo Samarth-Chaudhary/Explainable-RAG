@@ -1,0 +1,13 @@
+{
+  "name": "PRODUCTION-XGBOOST-CREDIT",
+  "version": "2.0.0-real",
+  "artifact_path": "data/demo/model.json",
+  "artifact_sha256": "a4403a4041294ffdbd11db45fce2ad22a151d1c5b968dc433e762bcf43c76673",
+  "feature_schema_hash": "dcc3a4e6f8845bef6bffab8d5df423992197ea5e2ffaf7a6036176de439d55b8",
+  "training_dataset_id": "uci-default-credit-card-train-21k",
+  "explainer_background_data_id": "uci-credit-train-100samples",
+  "calibration_status": "isotonic",
+  "created_timestamp": "2026-10-25T09:51:03.528732Z",
+  "owner": "Credit Model Risk Committee (Validated Real Data Model)",
+  "notes": "Tuned on 21,000 real credit records via 5-fold CV. Calibrated on 4,500 validation records. Test ROC-AUC=0.7742."
+}

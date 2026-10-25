@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0.0",
+  "features": [
+    {
+      "name": "AMT_CREDIT",
+      "label": "Loan Amount Requested",
+      "dtype": "float",
+      "unit": "INR",
+      "allowed_range": {
+        "min_value": 50000.0,
+        "max_value": 10000000.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 0,
+      "derived": false,
+      "formula": null,
+      "mutability": "actionable",
+      "description": "Total principal loan amount requested by the applicant"
+    },
+    {
+      "name": "AMT_ANNUITY",
+      "label": "Monthly Loan Installment",
+      "dtype": "float",
+      "unit": "INR",
+      "allowed_range": {
+        "min_value": 1000.0,
+        "max_value": 500000.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 1,
+      "derived": false,
+      "formula": null,
+      "mutability": "actionable",
+      "description": "Proposed monthly installment (amortized over loan tenor)"
+    },
+    {
+      "name": "AMT_GOODS_PRICE",
+      "label": "Collateral / Asset Value",
+      "dtype": "float",
+      "unit": "INR",
+      "allowed_range": {
+        "min_value": 50000.0,
+        "max_value": 15000000.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 2,
+      "derived": false,
+      "formula": null,
+      "mutability": "actionable",
+      "description": "Appraised value of collateral or purchase price of financed asset"
+    },
+    {
+      "name": "AMT_INCOME_TOTAL",
+      "label": "Monthly Verified Income",
+      "dtype": "float",
+      "unit": "INR",
+      "allowed_range": {
+        "min_value": 15000.0,
+        "max_value": 2000000.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 3,
+      "derived": false,
+      "formula": null,
+      "mutability": "immutable",
+      "description": "Verified monthly net eligible income of applicant"
+    },
+    {
+      "name": "EXISTING_DEBT_OBLIGATIONS",
+      "label": "Existing Monthly Obligations",
+      "dtype": "float",
+      "unit": "INR",
+      "allowed_range": {
+        "min_value": 0.0,
+        "max_value": 1000000.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 4,
+      "derived": false,
+      "formula": null,
+      "mutability": "immutable",
+      "description": "Existing monthly debt servicing obligations from credit bureau"
+    },
+    {
+      "name": "DAYS_EMPLOYED",
+      "label": "Employment Tenure",
+      "dtype": "float",
+      "unit": "days",
+      "allowed_range": {
+        "min_value": -20000.0,
+        "max_value": 0.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 5,
+      "derived": false,
+      "formula": null,
+      "mutability": "immutable",
+      "description": "Days since commencement of current employment (negative days convention)"
+    },
+    {
+      "name": "AGE",
+      "label": "Applicant Age",
+      "dtype": "float",
+      "unit": "years",
+      "allowed_range": {
+        "min_value": 18.0,
+        "max_value": 85.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 6,
+      "derived": false,
+      "formula": null,
+      "mutability": "sensitive",
+      "description": "Applicant age in completed years (protected attribute; frozen)"
+    },
+    {
+      "name": "CREDIT_BUREAU_SCORE",
+      "label": "Credit Bureau Score",
+      "dtype": "float",
+      "unit": "score",
+      "allowed_range": {
+        "min_value": 300.0,
+        "max_value": 900.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 7,
+      "derived": false,
+      "formula": null,
+      "mutability": "immutable",
+      "description": "Three-digit credit bureau score reflecting historical repayment performance"
+    },
+    {
+      "name": "PAST_DELINQUENCIES",
+      "label": "Past 30+ DPD Delinquencies",
+      "dtype": "int",
+      "unit": "count",
+      "allowed_range": {
+        "min_value": 0.0,
+        "max_value": 20.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 8,
+      "derived": false,
+      "formula": null,
+      "mutability": "immutable",
+      "description": "Count of 30+ days past due delinquency events in last 24 months"
+    },
+    {
+      "name": "FOIR_RATIO",
+      "label": "Fixed Obligation to Income Ratio",
+      "dtype": "float",
+      "unit": "ratio",
+      "allowed_range": {
+        "min_value": 0.0,
+        "max_value": 2.5
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 9,
+      "derived": true,
+      "formula": "(AMT_ANNUITY + EXISTING_DEBT_OBLIGATIONS) / AMT_INCOME_TOTAL",
+      "mutability": "derived",
+      "description": "Proportion of monthly income committed to total fixed debt obligations"
+    },
+    {
+      "name": "LTV_RATIO",
+      "label": "Loan to Value Ratio",
+      "dtype": "float",
+      "unit": "ratio",
+      "allowed_range": {
+        "min_value": 0.0,
+        "max_value": 2.0
+      },
+      "allowed_categories": null,
+      "nullability": false,
+      "null_handling_rule": "error",
+      "position_index": 10,
+      "derived": true,
+      "formula": "AMT_CREDIT / AMT_GOODS_PRICE",
+      "mutability": "derived",
+      "description": "Ratio of total loan amount to appraised collateral / asset value"
+    }
+  ],
+  "feature_order": [
+    "FOIR_RATIO",
+    "LTV_RATIO",
+    "CREDIT_BUREAU_SCORE",
+    "PAST_DELINQUENCIES",
+    "DAYS_EMPLOYED",
+    "AGE",
+    "AMT_CREDIT",
+    "AMT_ANNUITY",
+    "AMT_INCOME_TOTAL"
+  ],
+  "preprocessing_notes": "Strict canonical ordering with dynamic derivation of FOIR_RATIO and LTV_RATIO."
+}

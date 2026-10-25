@@ -1,0 +1,83 @@
+{
+  "additionalProperties": false,
+  "description": "Immutable model metadata and governance manifest.",
+  "properties": {
+    "name": {
+      "description": "Model identifier (e.g. 'SYNTHETIC-DEMO-XGB')",
+      "title": "Name",
+      "type": "string"
+    },
+    "version": {
+      "description": "Model version tag (e.g. '1.0.0-synthetic')",
+      "title": "Version",
+      "type": "string"
+    },
+    "artifact_path": {
+      "description": "Relative path to serialized model file",
+      "title": "Artifact Path",
+      "type": "string"
+    },
+    "artifact_sha256": {
+      "description": "SHA-256 cryptographic digest of the model artifact",
+      "title": "Artifact Sha256",
+      "type": "string"
+    },
+    "feature_schema_hash": {
+      "description": "SHA-256 hash of the canonical feature order and schema",
+      "title": "Feature Schema Hash",
+      "type": "string"
+    },
+    "training_dataset_id": {
+      "default": "synthetic-demo",
+      "description": "Lineage ID of training dataset or 'synthetic demo'",
+      "title": "Training Dataset Id",
+      "type": "string"
+    },
+    "explainer_background_data_id": {
+      "default": "synthetic-bg-100",
+      "description": "Dataset identifier for background reference distribution",
+      "title": "Explainer Background Data Id",
+      "type": "string"
+    },
+    "calibration_status": {
+      "default": "none",
+      "description": "Probability calibration method ('none', 'platt', 'isotonic')",
+      "enum": [
+        "none",
+        "platt",
+        "isotonic",
+        "beta"
+      ],
+      "title": "Calibration Status",
+      "type": "string"
+    },
+    "created_timestamp": {
+      "description": "Timestamp when model was trained and packaged",
+      "format": "date-time",
+      "title": "Created Timestamp",
+      "type": "string"
+    },
+    "owner": {
+      "default": "Credit Model Risk Management",
+      "description": "Organizational unit responsible for model validation and lifecycle",
+      "title": "Owner",
+      "type": "string"
+    },
+    "notes": {
+      "default": "Model calibration is not implemented; raw logistic margins are mapped to probabilities.",
+      "description": "Governance and calibration disclosure notes",
+      "title": "Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "version",
+    "artifact_path",
+    "artifact_sha256",
+    "feature_schema_hash",
+    "created_timestamp"
+  ],
+  "title": "ModelManifest",
+  "type": "object"
+}

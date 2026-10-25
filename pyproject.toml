@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xai-rag"
+version = "0.1.0"
+description = "Explainable credit-risk decision-auditing and remediation platform"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pyright]
+extraPaths = ["."]
+include = ["backend", "scripts", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
+addopts = "-v --tb=short"

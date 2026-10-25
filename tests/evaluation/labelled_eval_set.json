@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "description": "Labelled evaluation benchmark for XAI-RAG hybrid retrieval. Features synthetic policy questions mapped to expected supporting chunk/clause IDs. Performance figures in the brief (baseline ~52%, target 91% Recall@3) are documented as research hypotheses/aspirations only, not proven achieved results.",
+  "aspirations": {
+    "naive_baseline_hypothesis_recall_at_3": 0.52,
+    "target_hybrid_hypothesis_recall_at_3": 0.91,
+    "averaging_method": "macro_average"
+  },
+  "test_cases": [
+    {
+      "id": "EVAL-001",
+      "feature_name": "FOIR_RATIO",
+      "query_concept": "Assess permissible debt-to-income limits and tenor restructuring allowances for elevated debt service burden",
+      "lexical_terms": ["FOIR", "fixed obligation to income", "repayment capacity", "tenor extension"],
+      "expected_clause_ids": ["SYN-POL-FOIR-001-P1-C1", "SYN-POL-FOIR-001-P2-C2"],
+      "jurisdiction": "IN",
+      "source_family": "underwriting_rules"
+    },
+    {
+      "id": "EVAL-002",
+      "feature_name": "LTV_RATIO",
+      "query_concept": "Review collateral valuation haircuts and permissible maximum loan-to-value limits for secured credit lines",
+      "lexical_terms": ["LTV", "loan to value", "collateral", "haircut", "appraised value"],
+      "expected_clause_ids": ["SYN-POL-LTV-001-P1-C1", "SYN-POL-LTV-001-P2-C2"],
+      "jurisdiction": "IN",
+      "source_family": "collateral_policy"
+    },
+    {
+      "id": "EVAL-003",
+      "feature_name": "TENOR_MONTHS",
+      "query_concept": "Identify maximum tenor extensions permitted under debt restructuring guidelines",
+      "lexical_terms": ["tenor extension", "repayment tenure", "maximum duration", "restructuring"],
+      "expected_clause_ids": ["SYN-POL-FOIR-001-P2-C2"],
+      "jurisdiction": "IN",
+      "source_family": "underwriting_rules"
+    },
+    {
+      "id": "EVAL-004",
+      "feature_name": "UNKNOWN_CUSTOM_METRIC",
+      "query_concept": "Unmapped arbitrary feature search query with no authoritative policy coverage",
+      "lexical_terms": ["unknown_custom_metric", "unsupported"],
+      "expected_clause_ids": [],
+      "jurisdiction": "IN",
+      "source_family": "general"
+    }
+  ]
+}

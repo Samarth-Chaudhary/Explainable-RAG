@@ -1,0 +1,590 @@
+{
+  "$defs": {
+    "ReportCounterfactualCandidate": {
+      "additionalProperties": false,
+      "description": "Counterfactual scenario summary in AuditReport.",
+      "properties": {
+        "id": {
+          "description": "Candidate identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "changes": {
+          "description": "Feature changes [{feature, current, proposed, delta}]",
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Changes",
+          "type": "array"
+        },
+        "derived_recalculations": {
+          "description": "Derived ratio recalculations [{feature, formula, previous_value, new_value}]",
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Derived Recalculations",
+          "type": "array"
+        },
+        "predicted_probability": {
+          "description": "Directly re-scored model probability",
+          "title": "Predicted Probability",
+          "type": "number"
+        },
+        "target_met": {
+          "description": "Whether candidate meets target risk threshold",
+          "title": "Target Met",
+          "type": "boolean"
+        },
+        "constraints_passed": {
+          "description": "List of passed constraints",
+          "items": {
+            "type": "string"
+          },
+          "title": "Constraints Passed",
+          "type": "array"
+        },
+        "feasibility_status": {
+          "description": "Feasibility classification",
+          "enum": [
+            "feasible",
+            "infeasible",
+            "partially_feasible"
+          ],
+          "title": "Feasibility Status",
+          "type": "string"
+        },
+        "caveats": {
+          "description": "Required caveats and disclosures",
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "changes",
+        "derived_recalculations",
+        "predicted_probability",
+        "target_met",
+        "constraints_passed",
+        "feasibility_status",
+        "caveats"
+      ],
+      "title": "ReportCounterfactualCandidate",
+      "type": "object"
+    },
+    "ReportDossierSummary": {
+      "additionalProperties": false,
+      "description": "Structured synthesis dossier in AuditReport.",
+      "properties": {
+        "adverse_action_explanation": {
+          "description": "Synthesis of primary adverse action drivers",
+          "title": "Adverse Action Explanation",
+          "type": "string"
+        },
+        "candidate_review_paths": {
+          "description": "Actionable restructuring paths for credit officer review",
+          "items": {
+            "type": "string"
+          },
+          "title": "Candidate Review Paths",
+          "type": "array"
+        },
+        "regulatory_justification": {
+          "description": "Policy and regulatory grounding summary",
+          "title": "Regulatory Justification",
+          "type": "string"
+        },
+        "evidence_gaps": {
+          "description": "Any identified gaps in available policy evidence",
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Gaps",
+          "type": "array"
+        },
+        "reviewer_notes": {
+          "description": "Notes for the human compliance reviewer",
+          "title": "Reviewer Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "adverse_action_explanation",
+        "candidate_review_paths",
+        "regulatory_justification",
+        "evidence_gaps",
+        "reviewer_notes"
+      ],
+      "title": "ReportDossierSummary",
+      "type": "object"
+    },
+    "ReportEvidenceItem": {
+      "additionalProperties": false,
+      "description": "Individual evidence item in AuditReport.",
+      "properties": {
+        "source_id": {
+          "description": "Source document identifier",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "title": {
+          "description": "Title of document",
+          "title": "Title",
+          "type": "string"
+        },
+        "issuer": {
+          "description": "Issuing authority",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "description": "Jurisdiction",
+          "title": "Jurisdiction",
+          "type": "string"
+        },
+        "source_type": {
+          "description": "Category or source family",
+          "title": "Source Type",
+          "type": "string"
+        },
+        "version": {
+          "description": "Document version",
+          "title": "Version",
+          "type": "string"
+        },
+        "effective_date": {
+          "description": "Effective date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "description": "Document page number",
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "description": "Section heading or clause identifier",
+          "title": "Section",
+          "type": "string"
+        },
+        "quote": {
+          "description": "Extracted quote text",
+          "title": "Quote",
+          "type": "string"
+        },
+        "chunk_id": {
+          "description": "Specific chunk ID in index",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "url": {
+          "description": "Official URL or document reference",
+          "title": "Url",
+          "type": "string"
+        },
+        "verification_status": {
+          "description": "'verified', 'unverified', or 'failed'",
+          "enum": [
+            "verified",
+            "unverified",
+            "failed"
+          ],
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "title",
+        "issuer",
+        "jurisdiction",
+        "source_type",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "quote",
+        "chunk_id",
+        "url",
+        "verification_status"
+      ],
+      "title": "ReportEvidenceItem",
+      "type": "object"
+    },
+    "ReportExplanationSummary": {
+      "additionalProperties": false,
+      "description": "Explanation summary in AuditReport.",
+      "properties": {
+        "output_space": {
+          "description": "'log_odds' or 'probability'",
+          "enum": [
+            "log_odds",
+            "probability"
+          ],
+          "title": "Output Space",
+          "type": "string"
+        },
+        "base_value": {
+          "description": "Background base value E[f(x)]",
+          "title": "Base Value",
+          "type": "number"
+        },
+        "shap_additivity_residual": {
+          "description": "Residual of additivity equation",
+          "title": "Shap Additivity Residual",
+          "type": "number"
+        },
+        "features": {
+          "description": "All feature attributions",
+          "items": {
+            "$ref": "#/$defs/ReportFeatureContribution"
+          },
+          "title": "Features",
+          "type": "array"
+        }
+      },
+      "required": [
+        "output_space",
+        "base_value",
+        "shap_additivity_residual",
+        "features"
+      ],
+      "title": "ReportExplanationSummary",
+      "type": "object"
+    },
+    "ReportFeatureContribution": {
+      "additionalProperties": false,
+      "description": "Individual feature attribution entry in AuditReport.",
+      "properties": {
+        "name": {
+          "description": "Feature name",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "description": "Display label",
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "description": "Feature value",
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "description": "Unit of measurement",
+          "title": "Unit",
+          "type": "string"
+        },
+        "shap_value": {
+          "description": "Attribution value in declared output space",
+          "title": "Shap Value",
+          "type": "number"
+        },
+        "direction": {
+          "description": "'risk_increasing', 'risk_reducing', or 'neutral'",
+          "enum": [
+            "risk_increasing",
+            "risk_reducing",
+            "neutral"
+          ],
+          "title": "Direction",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "value",
+        "unit",
+        "shap_value",
+        "direction"
+      ],
+      "title": "ReportFeatureContribution",
+      "type": "object"
+    },
+    "ReportModelSummary": {
+      "additionalProperties": false,
+      "description": "Model lineage summary in AuditReport.",
+      "properties": {
+        "name": {
+          "description": "Model name",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "description": "Model version",
+          "title": "Version",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "description": "Cryptographic SHA-256 hash of model artifact",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "calibration_status": {
+          "description": "Calibration status disclosure",
+          "title": "Calibration Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "artifact_sha256",
+        "calibration_status"
+      ],
+      "title": "ReportModelSummary",
+      "type": "object"
+    },
+    "ReportPredictionSummary": {
+      "additionalProperties": false,
+      "description": "Prediction summary in AuditReport.",
+      "properties": {
+        "raw_output": {
+          "description": "Raw model score / margin",
+          "title": "Raw Output",
+          "type": "number"
+        },
+        "default_probability": {
+          "description": "Probability of default",
+          "title": "Default Probability",
+          "type": "number"
+        },
+        "threshold": {
+          "description": "Operational decision threshold",
+          "title": "Threshold",
+          "type": "number"
+        },
+        "label": {
+          "description": "Operational classification label",
+          "title": "Label",
+          "type": "string"
+        },
+        "output_notes": {
+          "description": "Notes on calibration and score derivation",
+          "title": "Output Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_output",
+        "default_probability",
+        "threshold",
+        "label",
+        "output_notes"
+      ],
+      "title": "ReportPredictionSummary",
+      "type": "object"
+    },
+    "ReportSearchTraceSummary": {
+      "additionalProperties": false,
+      "description": "Retrieval trace summary in AuditReport.",
+      "properties": {
+        "ontology_version": {
+          "description": "Ontology version used for query translation",
+          "title": "Ontology Version",
+          "type": "string"
+        },
+        "features_used": {
+          "description": "Features used to construct search query",
+          "items": {
+            "type": "string"
+          },
+          "title": "Features Used",
+          "type": "array"
+        },
+        "dense_query": {
+          "description": "Dense semantic query text",
+          "title": "Dense Query",
+          "type": "string"
+        },
+        "bm25_terms": {
+          "description": "Lexical search terms",
+          "items": {
+            "type": "string"
+          },
+          "title": "Bm25 Terms",
+          "type": "array"
+        },
+        "metadata_filters": {
+          "additionalProperties": true,
+          "description": "Applied metadata filters",
+          "title": "Metadata Filters",
+          "type": "object"
+        },
+        "retrieved_chunk_ids": {
+          "description": "List of chunk IDs retrieved",
+          "items": {
+            "type": "string"
+          },
+          "title": "Retrieved Chunk Ids",
+          "type": "array"
+        },
+        "index_version": {
+          "description": "Vector and lexical index version",
+          "title": "Index Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ontology_version",
+        "features_used",
+        "dense_query",
+        "bm25_terms",
+        "metadata_filters",
+        "retrieved_chunk_ids",
+        "index_version"
+      ],
+      "title": "ReportSearchTraceSummary",
+      "type": "object"
+    },
+    "ReportVerifierSummary": {
+      "additionalProperties": false,
+      "description": "Quote matching and citation verification metrics in AuditReport.",
+      "properties": {
+        "quote_checks_total": {
+          "description": "Total quotes verified against source text",
+          "title": "Quote Checks Total",
+          "type": "integer"
+        },
+        "quote_checks_passed": {
+          "description": "Quotes confirmed verbatim",
+          "title": "Quote Checks Passed",
+          "type": "integer"
+        },
+        "quote_checks_failed": {
+          "description": "Quotes failing exact match check",
+          "title": "Quote Checks Failed",
+          "type": "integer"
+        },
+        "faithfulness_score": {
+          "description": "Faithfulness score (passed / total)",
+          "title": "Faithfulness Score",
+          "type": "number"
+        },
+        "normalized_match_policy": {
+          "description": "Policy used for text normalization",
+          "title": "Normalized Match Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "quote_checks_total",
+        "quote_checks_passed",
+        "quote_checks_failed",
+        "faithfulness_score",
+        "normalized_match_policy"
+      ],
+      "title": "ReportVerifierSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The authoritative cross-module audit report contract.",
+  "properties": {
+    "audit_id": {
+      "description": "Unique audit execution identifier",
+      "title": "Audit Id",
+      "type": "string"
+    },
+    "applicant_ref": {
+      "description": "Pseudonymous / display applicant reference (no unnecessary PII)",
+      "title": "Applicant Ref",
+      "type": "string"
+    },
+    "generated_at": {
+      "description": "Audit completion timestamp",
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "mode": {
+      "description": "'demo' or 'configured'",
+      "enum": [
+        "demo",
+        "configured"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "status": {
+      "description": "'complete', 'partial', or 'failed'",
+      "enum": [
+        "complete",
+        "partial",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ReportModelSummary",
+      "description": "Model lineage metadata"
+    },
+    "prediction": {
+      "$ref": "#/$defs/ReportPredictionSummary",
+      "description": "Prediction results"
+    },
+    "explanation": {
+      "$ref": "#/$defs/ReportExplanationSummary",
+      "description": "TreeSHAP local explanation"
+    },
+    "counterfactuals": {
+      "description": "Constrained counterfactual candidates",
+      "items": {
+        "$ref": "#/$defs/ReportCounterfactualCandidate"
+      },
+      "title": "Counterfactuals",
+      "type": "array"
+    },
+    "search_trace": {
+      "$ref": "#/$defs/ReportSearchTraceSummary",
+      "description": "Ontology-to-retrieval trace"
+    },
+    "evidence": {
+      "description": "Retrieved and verified policy evidence",
+      "items": {
+        "$ref": "#/$defs/ReportEvidenceItem"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "dossier": {
+      "$ref": "#/$defs/ReportDossierSummary",
+      "description": "Structured report synthesis"
+    },
+    "verifier": {
+      "$ref": "#/$defs/ReportVerifierSummary",
+      "description": "Citation verification audit summary"
+    },
+    "human_review_required": {
+      "default": true,
+      "description": "Mandatory advisory flag: system is decision support and requires human judgment",
+      "title": "Human Review Required",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "audit_id",
+    "applicant_ref",
+    "generated_at",
+    "mode",
+    "status",
+    "model",
+    "prediction",
+    "explanation",
+    "counterfactuals",
+    "search_trace",
+    "evidence",
+    "dossier",
+    "verifier"
+  ],
+  "title": "AuditReport",
+  "type": "object"
+}

@@ -1,0 +1,206 @@
+{
+  "$defs": {
+    "FeatureDefinition": {
+      "additionalProperties": false,
+      "description": "Comprehensive specification for an individual model feature.",
+      "properties": {
+        "name": {
+          "description": "Unique programmatic feature identifier",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "description": "Human-readable business display label",
+          "title": "Label",
+          "type": "string"
+        },
+        "dtype": {
+          "description": "Data type of the feature",
+          "enum": [
+            "float",
+            "int",
+            "str",
+            "bool"
+          ],
+          "title": "Dtype",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Measurement unit: e.g. 'INR', 'ratio', 'days', 'years', 'count'",
+          "title": "Unit",
+          "type": "string"
+        },
+        "allowed_range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NumericRange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Permitted min/max numerical range"
+        },
+        "allowed_categories": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Permitted categorical values",
+          "title": "Allowed Categories"
+        },
+        "nullability": {
+          "default": false,
+          "description": "Whether null/NaN values are permitted",
+          "title": "Nullability",
+          "type": "boolean"
+        },
+        "null_handling_rule": {
+          "default": "error",
+          "description": "Policy for handling missing values",
+          "enum": [
+            "error",
+            "zero",
+            "mean",
+            "median",
+            "mode",
+            "constant"
+          ],
+          "title": "Null Handling Rule",
+          "type": "string"
+        },
+        "position_index": {
+          "description": "Strict position index in the model input feature vector",
+          "minimum": 0,
+          "title": "Position Index",
+          "type": "integer"
+        },
+        "derived": {
+          "default": false,
+          "description": "Whether this feature is computed from primitive inputs",
+          "title": "Derived",
+          "type": "boolean"
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Documented mathematical derivation formula",
+          "title": "Formula"
+        },
+        "mutability": {
+          "description": "Feature mutability: 'immutable', 'actionable', 'derived', or 'sensitive'",
+          "enum": [
+            "immutable",
+            "actionable",
+            "derived",
+            "sensitive"
+          ],
+          "title": "Mutability",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Business and domain definition",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "dtype",
+        "unit",
+        "position_index",
+        "mutability"
+      ],
+      "title": "FeatureDefinition",
+      "type": "object"
+    },
+    "NumericRange": {
+      "additionalProperties": false,
+      "description": "Allowed numeric range bounds.",
+      "properties": {
+        "min_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Value"
+        },
+        "max_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Value"
+        }
+      },
+      "title": "NumericRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Container for the complete validated feature schema.",
+  "properties": {
+    "schema_version": {
+      "default": "1.0.0",
+      "description": "Semantic version of the feature schema",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "features": {
+      "description": "List of all defined feature specifications",
+      "items": {
+        "$ref": "#/$defs/FeatureDefinition"
+      },
+      "title": "Features",
+      "type": "array"
+    },
+    "feature_order": {
+      "description": "Canonical sequence of feature names for model inference",
+      "items": {
+        "type": "string"
+      },
+      "title": "Feature Order",
+      "type": "array"
+    },
+    "preprocessing_notes": {
+      "default": "Standard numeric alignment without target leakage or silent unit coercion",
+      "description": "Documentation of preprocessing rules",
+      "title": "Preprocessing Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "features",
+    "feature_order"
+  ],
+  "title": "FeatureSchema",
+  "type": "object"
+}

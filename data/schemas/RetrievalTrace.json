@@ -1,0 +1,165 @@
+{
+  "$defs": {
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "An individual indexed passage of an authoritative policy document.",
+      "properties": {
+        "chunk_id": {
+          "description": "Unique chunk identifier: e.g. 'DOC-001-P4-C2'",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "source_id": {
+          "description": "Parent source document ID",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "text": {
+          "description": "Extracted textual content of the chunk",
+          "title": "Text",
+          "type": "string"
+        },
+        "page_number": {
+          "description": "Original PDF page number",
+          "minimum": 1,
+          "title": "Page Number",
+          "type": "integer"
+        },
+        "section_title": {
+          "description": "Heading or clause label",
+          "title": "Section Title",
+          "type": "string"
+        },
+        "token_count": {
+          "description": "Approximate token length",
+          "minimum": 0,
+          "title": "Token Count",
+          "type": "integer"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "description": "Custom chunk metadata tags",
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "source_id",
+        "text",
+        "page_number",
+        "section_title",
+        "token_count"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    },
+    "HybridQueryPayload": {
+      "additionalProperties": false,
+      "description": "Payload produced by ontology translator for hybrid FAISS + BM25 search.",
+      "properties": {
+        "dense_query": {
+          "description": "Dense semantic search query text",
+          "title": "Dense Query",
+          "type": "string"
+        },
+        "bm25_terms": {
+          "description": "Lexical keyword search terms",
+          "items": {
+            "type": "string"
+          },
+          "title": "Bm25 Terms",
+          "type": "array"
+        },
+        "metadata_filters": {
+          "additionalProperties": true,
+          "description": "Metadata filters: e.g. jurisdiction, source_family, status",
+          "title": "Metadata Filters",
+          "type": "object"
+        },
+        "top_k": {
+          "default": 5,
+          "description": "Number of chunks to retrieve",
+          "minimum": 1,
+          "title": "Top K",
+          "type": "integer"
+        },
+        "source_families": {
+          "description": "Target source categories",
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Families",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dense_query",
+        "bm25_terms"
+      ],
+      "title": "HybridQueryPayload",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Trace of retrieval execution and score fusion.",
+  "properties": {
+    "trace_id": {
+      "description": "Unique trace identifier",
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "query_payload": {
+      "$ref": "#/$defs/HybridQueryPayload",
+      "description": "Input search payload"
+    },
+    "dense_scores": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "FAISS similarity scores by chunk_id",
+      "title": "Dense Scores",
+      "type": "object"
+    },
+    "bm25_scores": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "BM25 relevance scores by chunk_id",
+      "title": "Bm25 Scores",
+      "type": "object"
+    },
+    "fused_scores": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "Reciprocal rank fusion scores",
+      "title": "Fused Scores",
+      "type": "object"
+    },
+    "retrieved_chunks": {
+      "description": "Final retrieved chunks in rank order",
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      },
+      "title": "Retrieved Chunks",
+      "type": "array"
+    },
+    "execution_time_ms": {
+      "description": "Retrieval latency in milliseconds",
+      "title": "Execution Time Ms",
+      "type": "number"
+    }
+  },
+  "required": [
+    "trace_id",
+    "query_payload",
+    "dense_scores",
+    "bm25_scores",
+    "fused_scores",
+    "retrieved_chunks",
+    "execution_time_ms"
+  ],
+  "title": "RetrievalTrace",
+  "type": "object"
+}

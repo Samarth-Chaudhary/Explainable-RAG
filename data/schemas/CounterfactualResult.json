@@ -1,0 +1,294 @@
+{
+  "$defs": {
+    "CounterfactualCandidate": {
+      "additionalProperties": false,
+      "description": "An individual candidate remediation scenario.",
+      "properties": {
+        "id": {
+          "description": "Unique candidate scenario identifier (e.g. 'CF-1')",
+          "title": "Id",
+          "type": "string"
+        },
+        "changes": {
+          "description": "List of proposed feature changes on actionable levers",
+          "items": {
+            "$ref": "#/$defs/FeatureChange"
+          },
+          "title": "Changes",
+          "type": "array"
+        },
+        "derived_recalculations": {
+          "description": "Recalculated derived ratios (e.g. FOIR, LTV)",
+          "items": {
+            "$ref": "#/$defs/DerivedRecalculation"
+          },
+          "title": "Derived Recalculations",
+          "type": "array"
+        },
+        "predicted_probability": {
+          "description": "Exact re-scored default probability from production inference pipeline",
+          "title": "Predicted Probability",
+          "type": "number"
+        },
+        "target_met": {
+          "description": "Whether re-scored probability satisfies target threshold",
+          "title": "Target Met",
+          "type": "boolean"
+        },
+        "constraints_passed": {
+          "description": "Validated business, range, and immutability constraints",
+          "items": {
+            "type": "string"
+          },
+          "title": "Constraints Passed",
+          "type": "array"
+        },
+        "constraints_failed": {
+          "description": "Any business or domain constraints that failed validation",
+          "items": {
+            "type": "string"
+          },
+          "title": "Constraints Failed",
+          "type": "array"
+        },
+        "feasibility_status": {
+          "description": "'feasible' (all constraints met), 'infeasible', or 'partially_feasible'",
+          "enum": [
+            "feasible",
+            "infeasible",
+            "partially_feasible"
+          ],
+          "title": "Feasibility Status",
+          "type": "string"
+        },
+        "caveats": {
+          "description": "Mandatory advisory disclosures (e.g. 'Candidate scenario for human review; not a guarantee')",
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        },
+        "unmodelled_dependencies": {
+          "description": "Real-world dependencies not captured in tabular model (e.g. collateral valuation verification)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Unmodelled Dependencies",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "changes",
+        "derived_recalculations",
+        "predicted_probability",
+        "target_met",
+        "constraints_passed",
+        "feasibility_status"
+      ],
+      "title": "CounterfactualCandidate",
+      "type": "object"
+    },
+    "CounterfactualMetrics": {
+      "additionalProperties": false,
+      "description": "Summary metrics of counterfactual optimization and feasibility.",
+      "properties": {
+        "validity": {
+          "description": "Proportion of evaluated candidates meeting target threshold",
+          "title": "Validity",
+          "type": "number"
+        },
+        "actionability": {
+          "description": "Proportion of evaluated candidates meeting target AND all feasibility constraints",
+          "title": "Actionability",
+          "type": "number"
+        },
+        "generation_failure_rate": {
+          "description": "1.0 - validity rate",
+          "title": "Generation Failure Rate",
+          "type": "number"
+        },
+        "time_to_generate_ms": {
+          "description": "Search and validation duration in milliseconds",
+          "title": "Time To Generate Ms",
+          "type": "number"
+        },
+        "number_of_candidates": {
+          "description": "Total valid candidates returned",
+          "title": "Number Of Candidates",
+          "type": "integer"
+        },
+        "proximity": {
+          "description": "Continuous L1 distance normalized by feature ranges",
+          "title": "Proximity",
+          "type": "number"
+        },
+        "diversity": {
+          "description": "Mean pairwise distance across returned candidate vectors",
+          "title": "Diversity",
+          "type": "number"
+        },
+        "ood_flags": {
+          "description": "Count of feature values flagged as out-of-distribution",
+          "title": "Ood Flags",
+          "type": "integer"
+        },
+        "target_miss_magnitude": {
+          "description": "Mean probability gap above target for non-satisfying profiles",
+          "title": "Target Miss Magnitude",
+          "type": "number"
+        },
+        "denominator": {
+          "description": "Explicit explanation of calculation denominator (e.g. '3 candidates evaluated')",
+          "title": "Denominator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "validity",
+        "actionability",
+        "generation_failure_rate",
+        "time_to_generate_ms",
+        "number_of_candidates",
+        "proximity",
+        "diversity",
+        "ood_flags",
+        "target_miss_magnitude",
+        "denominator"
+      ],
+      "title": "CounterfactualMetrics",
+      "type": "object"
+    },
+    "DerivedRecalculation": {
+      "additionalProperties": false,
+      "description": "Automatic recalculation of a derived ratio resulting from primitive changes.",
+      "properties": {
+        "feature": {
+          "description": "Name of derived feature",
+          "title": "Feature",
+          "type": "string"
+        },
+        "formula": {
+          "description": "Mathematical formula used for recomputation",
+          "title": "Formula",
+          "type": "string"
+        },
+        "previous_value": {
+          "description": "Original derived value",
+          "title": "Previous Value",
+          "type": "number"
+        },
+        "new_value": {
+          "description": "Recomputed derived value after primitive modifications",
+          "title": "New Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "feature",
+        "formula",
+        "previous_value",
+        "new_value"
+      ],
+      "title": "DerivedRecalculation",
+      "type": "object"
+    },
+    "FeatureChange": {
+      "additionalProperties": false,
+      "description": "Specific proposed adjustment to an actionable feature.",
+      "properties": {
+        "feature": {
+          "description": "Name of actionable primitive feature",
+          "title": "Feature",
+          "type": "string"
+        },
+        "current": {
+          "description": "Original observed applicant value",
+          "title": "Current",
+          "type": "number"
+        },
+        "proposed": {
+          "description": "Proposed counterfactual value",
+          "title": "Proposed",
+          "type": "number"
+        },
+        "delta": {
+          "description": "Proposed change: proposed - current",
+          "title": "Delta",
+          "type": "number"
+        }
+      },
+      "required": [
+        "feature",
+        "current",
+        "proposed",
+        "delta"
+      ],
+      "title": "FeatureChange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Typed result of constrained counterfactual optimization (P1.0 handoff).",
+  "properties": {
+    "schema_version": {
+      "default": "1.0.0",
+      "description": "Contract schema version",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "request_config": {
+      "additionalProperties": true,
+      "description": "Configuration used for generation",
+      "title": "Request Config",
+      "type": "object"
+    },
+    "candidates": {
+      "description": "Candidate profiles satisfying target and constraints",
+      "items": {
+        "$ref": "#/$defs/CounterfactualCandidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "no_feasible_found": {
+      "description": "True if no candidate satisfied both the target threshold and all constraints",
+      "title": "No Feasible Found",
+      "type": "boolean"
+    },
+    "no_feasible_message": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Exact string: 'No feasible counterfactual found under configured constraints'",
+      "title": "No Feasible Message"
+    },
+    "closest_non_satisfying": {
+      "description": "Nearest non-qualifying alternatives (never labelled as approval paths)",
+      "items": {
+        "$ref": "#/$defs/CounterfactualCandidate"
+      },
+      "title": "Closest Non Satisfying",
+      "type": "array"
+    },
+    "metrics": {
+      "$ref": "#/$defs/CounterfactualMetrics",
+      "description": "Performance and quality metrics"
+    }
+  },
+  "required": [
+    "request_config",
+    "candidates",
+    "no_feasible_found",
+    "metrics"
+  ],
+  "title": "CounterfactualResult",
+  "type": "object"
+}

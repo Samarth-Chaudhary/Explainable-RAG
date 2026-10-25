@@ -1,0 +1,21 @@
+# Runtime dependencies (hand-curated, pinned, UTF-8 encoded)
+dice_ml==0.12
+faiss-cpu==1.15.1
+fastapi==0.149.0
+numpy==2.4.6
+pandas==3.0.6
+pydantic==2.14.1
+pydantic-settings==2.16.0
+PyJWT==2.15.1
+pymupdf==2.0
+python-dotenv==1.2.4
+python-multipart==0.0.32
+rank-bm25==0.2.2
+requests==2.34.2
+scikit-learn==1.9.1
+scipy==1.17.1
+shap==0.51.0
+SQLAlchemy==2.1.5
+ucimlrepo==0.0.7
+uvicorn==0.54.0
+xgboost==3.2.0

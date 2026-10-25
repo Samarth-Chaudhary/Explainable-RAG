@@ -1,0 +1,53 @@
+{
+  "additionalProperties": false,
+  "description": "Tamper-evident audit event log record.",
+  "properties": {
+    "event_id": {
+      "description": "Unique event ID",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "description": "Event timestamp",
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "event_type": {
+      "description": "Category: e.g. 'PREDICTION', 'EXPLANATION', 'COUNTERFACTUAL'",
+      "title": "Event Type",
+      "type": "string"
+    },
+    "actor": {
+      "description": "Initiating user or system component",
+      "title": "Actor",
+      "type": "string"
+    },
+    "payload_hash": {
+      "description": "SHA-256 hash of event payload",
+      "title": "Payload Hash",
+      "type": "string"
+    },
+    "previous_event_hash": {
+      "description": "Cryptographic hash of preceding event in ledger",
+      "title": "Previous Event Hash",
+      "type": "string"
+    },
+    "event_hash": {
+      "description": "SHA-256 hash of this complete block",
+      "title": "Event Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "timestamp",
+    "event_type",
+    "actor",
+    "payload_hash",
+    "previous_event_hash",
+    "event_hash"
+  ],
+  "title": "AuditEvent",
+  "type": "object"
+}

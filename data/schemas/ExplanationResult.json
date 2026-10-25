@@ -1,0 +1,155 @@
+{
+  "$defs": {
+    "FeatureContributionSummary": {
+      "additionalProperties": false,
+      "description": "Local attribution for a single feature.",
+      "properties": {
+        "name": {
+          "description": "Programmatic feature identifier",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "description": "Human-readable business display label",
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "description": "Observed applicant feature value",
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "description": "Measurement unit",
+          "title": "Unit",
+          "type": "string"
+        },
+        "shap_value": {
+          "description": "Local SHAP attribution contribution in declared output space",
+          "title": "Shap Value",
+          "type": "number"
+        },
+        "direction": {
+          "description": "'risk_increasing' (> 0), 'risk_reducing' (< 0), or 'neutral'",
+          "enum": [
+            "risk_increasing",
+            "risk_reducing",
+            "neutral"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "rank": {
+          "description": "Absolute attribution importance rank (1 = largest impact)",
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "value",
+        "unit",
+        "shap_value",
+        "direction",
+        "rank"
+      ],
+      "title": "FeatureContributionSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Typed result of SHAP explanation and additivity audit (P1.0 handoff).",
+  "properties": {
+    "schema_version": {
+      "default": "1.0.0",
+      "description": "Contract schema version",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "output_space": {
+      "description": "Declared coordinate space: 'log_odds' (margin space) or 'probability'",
+      "enum": [
+        "log_odds",
+        "probability"
+      ],
+      "title": "Output Space",
+      "type": "string"
+    },
+    "base_value": {
+      "description": "Expected model output E[f(x)] over reference background",
+      "title": "Base Value",
+      "type": "number"
+    },
+    "shap_additivity_residual": {
+      "description": "Absolute difference between (base_value + sum(shap)) and model target output",
+      "title": "Shap Additivity Residual",
+      "type": "number"
+    },
+    "tolerance": {
+      "description": "Configured maximum acceptable numerical residual",
+      "title": "Tolerance",
+      "type": "number"
+    },
+    "additivity_status": {
+      "description": "Status: 'valid' passes residual check; 'degraded' or 'invalid' blocks downstream narrative",
+      "enum": [
+        "valid",
+        "degraded",
+        "invalid"
+      ],
+      "title": "Additivity Status",
+      "type": "string"
+    },
+    "features": {
+      "description": "Complete ranked list of all feature contributions (all features, not top-3)",
+      "items": {
+        "$ref": "#/$defs/FeatureContributionSummary"
+      },
+      "title": "Features",
+      "type": "array"
+    },
+    "top_risk_increasing": {
+      "description": "Primary features pushing prediction toward higher credit risk",
+      "items": {
+        "$ref": "#/$defs/FeatureContributionSummary"
+      },
+      "title": "Top Risk Increasing",
+      "type": "array"
+    },
+    "top_risk_reducing": {
+      "description": "Primary features mitigating credit risk toward approval",
+      "items": {
+        "$ref": "#/$defs/FeatureContributionSummary"
+      },
+      "title": "Top Risk Reducing",
+      "type": "array"
+    },
+    "explainer_config": {
+      "additionalProperties": true,
+      "description": "Explainer metadata: model_output, feature_perturbation, background_id, shap_version",
+      "title": "Explainer Config",
+      "type": "object"
+    },
+    "methodology_notes": {
+      "description": "Scientific caveats: SHAP measures attribution relative to background, not real-world causality",
+      "title": "Methodology Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "output_space",
+    "base_value",
+    "shap_additivity_residual",
+    "tolerance",
+    "additivity_status",
+    "features",
+    "top_risk_increasing",
+    "top_risk_reducing",
+    "explainer_config",
+    "methodology_notes"
+  ],
+  "title": "ExplanationResult",
+  "type": "object"
+}
