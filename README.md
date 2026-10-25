@@ -1,6 +1,7 @@
 # XAI-RAG: Defensible Real-Data Credit-Risk Explainability & Decision-Auditing Platform
 
-[![Model Risk CI Pipeline](https://github.com/owner/xai-rag/actions/workflows/ci.yml/badge.svg)](.github/workflows/ci.yml)
+[![Model Risk CI Pipeline](https://github.com/Samarth-Chaudhary/Explainable-RAG/actions/workflows/ci.yml/badge.svg)](https://github.com/Samarth-Chaudhary/Explainable-RAG/actions/workflows/ci.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-blue?logo=github)](https://samarth-chaudhary.github.io/Explainable-RAG/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
